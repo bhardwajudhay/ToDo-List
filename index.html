@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+#bigg{
+  height: 400px;
+  width: 400px;
+  background-color: aquamarine;
+  /* border: 3px dotted #60bafe;
+  border-radius: 15px; */
+  position: relative;
+}
+#small{
+  height: 40px;
+  width: 40px;
+  background-color: rgb(244, 93, 5);
+  /* border: 3px solid #e7f65e;
+  border-radius: 2px;*/
+  position: absolute; 
+  
+}
+#cc{
+  height: 80px;
+  width:80px;
+  background-color: rgb(251, 14, 81);
+}
+  </style>
+</head>
+<body>
+  <div id="bigg">
+    <div id="small"></div></div>
+    <button onclick="myMove()">Click</button>
+
+    <div id="cc"></div>
+    <br>
+    <button id="btn">change</button>
+  
+
+    
+
+
+<script>
+    var y = document.getElementById("bigg");
+    y.innerhtml=window.location.href;
+function myMove() {
+    let pos=0;
+    var x = document.getElementById("small");
+    var timerID = setInterval(frame,10);
+    function frame() {
+      if (pos == 350) {
+        clearInterval(timerID);
+        } else {
+          pos++;
+          x.style.left = pos + 'px';
+          x.style.top = pos++ + 'px';
+          }
+          }
+         
+    }
+    document.getElementById('btn').addEventListener('keypress',changecolor);
+    function changecolor(){
+      var k=document.getElementById('cc');
+      cc.style.backgroundColor="#fff";
+      alert("color changed");
+      prompt("colorchanged");
+    }
+  </script>
+  
+</body>
+</html>
