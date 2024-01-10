@@ -1,73 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-#bigg{
-  height: 400px;
-  width: 400px;
-  background-color: aquamarine;
-  /* border: 3px dotted #60bafe;
-  border-radius: 15px; */
-  position: relative;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do</title>
+    <style>
+        * { box-sizing: border-box; }
+.container{
+            width:100%;
+            min-height: 100vh;
+            background: linear-gradient(150deg,#0471f7,#41018a);
+            padding: 10px;
+    }
+.todo{
+        width: 100%;
+        max-width: 550px;
+        background: #ffffff;
+        margin: 100px auto 50px;
+        padding:40px 30px 70px;
+        border-radius:10px ;
+   }
+   .todo h1{
+    color:#002765;
+    display:flex;
+    align-items: center;
+    margin-bottom: 20px;
+   }
+   .todo h1 img{
+    width: 50px;
+    margin-left: 15px;
+
+   }
+   .row{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    border-radius: 9px;
+    background: #f7f1f1;
+   }
+   input{
+    flex:1;
+    height: 30px;
+    padding: 0 10px;
+    border: none;
+    outline: none;
+    font-weight: 16px;
+    background: transparent;
+   }
+   button{
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 14px;
+    background: #fb3b06;
+    color: #f7f1f1;
+    height: 50px;
+    border-radius: 10px;
+    padding: 10px 15px;
+   }
+   ul li{ 
+    list-style: none;
+    font-size: 17px;
+    padding: 12px 8px 12px 50px;
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+   }
+   ul li::before{
+    content: '';
+    position: absolute;
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    background-image: url(unchecked.png);
+    background-size: cover;
+    background-position: center;
+    top: 8px;
+    left: 8px;
+
+   }
+   ul li.check{
+    color: #555;
+    text-decoration: line-through;
+   }
+   ul li.check::before {
+    background-image: url(checked.png);
+    
 }
-#small{
-  height: 40px;
-  width: 40px;
-  background-color: rgb(244, 93, 5);
-  /* border: 3px solid #e7f65e;
-  border-radius: 2px;*/
-  position: absolute; 
-  
+ul li span{
+    position: absolute;
+    right:0 ;
+    top: 5px;
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+    color:#555;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 40px;
 }
-#cc{
-  height: 80px;
-  width:80px;
-  background-color: rgb(251, 14, 81);
+ul li span:hover{
+   background: #edeef0; 
+
 }
-  </style>
+   </style>
+
 </head>
 <body>
-  <div id="bigg">
-    <div id="small"></div></div>
-    <button onclick="myMove()">Click</button>
+    <div class="container">
+        <div class="todo"> 
+            <h1>To Do List <img src="icon.png" alt=""> </h1>
+        
+        <div class="row">
+            <input type="text" name="udhay" id="inpt" placeholder="Add Your Work Here">
+            <button onclick="addTodo()">+ Add Task</button>
+        </div>
+        
+            <ul id="list">
+                <!-- <li class="check">Task1</li>
+                <li>Task2</li>
+                <li>Task3</li>
+            </ul> -->
+        
+    </div>
+</div>
 
-    <div id="cc"></div>
-    <br>
-    <button id="btn">change</button>
-  
 
-    
 
 
 <script>
-    var y = document.getElementById("bigg");
-    y.innerhtml=window.location.href;
-function myMove() {
-    let pos=0;
-    var x = document.getElementById("small");
-    var timerID = setInterval(frame,10);
-    function frame() {
-      if (pos == 350) {
-        clearInterval(timerID);
-        } else {
-          pos++;
-          x.style.left = pos + 'px';
-          x.style.top = pos++ + 'px';
-          }
-          }
-         
+    const inpt=document.getElementById('inpt')
+    const list=document.getElementById('list');
+    function addTodo(){
+        if(inpt.value==''){
+            alert("You must add something")
+        }
+        else{
+            let li=document.createElement('li');
+            li.innerHTML=inpt.value;
+            list.appendChild(li);
+            let span=document.createElement("span");
+            span.innerHTML="\u00d7";
+            li.appendChild(span);
+        }
+        inpt.value="";
+        save();
     }
-    document.getElementById('btn').addEventListener('keypress',changecolor);
-    function changecolor(){
-      var k=document.getElementById('cc');
-      cc.style.backgroundColor="#fff";
-      alert("color changed");
-      prompt("colorchanged");
+    list.addEventListener('click',function (e) {
+        if(e.target.tagName=="LI"){
+            e.target.classList.toggle('check');
+            save();
+        }
+    else if (e.target.tagName=="SPAN"){
+            e.target.parentElement.remove();
+            save();
+    
     }
-  </script>
-  
+    }, false);
+    function save(){
+        localStorage.setItem("data",list.innerHTML);
+    }
+    function showTask(){
+        list.innerHTML=localStorage.getItem("data");
+    }
+    showTask();
+</script>
 </body>
 </html>
